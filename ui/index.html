@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CommsPulse - Dashboard</title>
+  <style>
+    :root {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-card: #1e293b;
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --accent: #3b82f6;
+      --accent-hover: #2563eb;
+      --success: #22c55e;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --border: #334155;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    
+    nav {
+      display: flex;
+      gap: 1.5rem;
+    }
+    
+    nav a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      transition: all 0.2s;
+    }
+    
+    nav a:hover, nav a.active {
+      color: var(--text-primary);
+      background: var(--bg-secondary);
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    .stat-card {
+      background: var(--bg-card);
+      padding: 1.5rem;
+      border-radius: 1rem;
+      border: 1px solid var(--border);
+    }
+    
+    .stat-card h3 {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+    
+    .stat-card .value {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    
+    .stat-card .subtitle {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      margin-top: 0.25rem;
+    }
+    
+    .stat-card.urgent .value {
+      color: var(--danger);
+    }
+    
+    .section {
+      margin-bottom: 2rem;
+    }
+    
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    
+    .section h2 {
+      font-size: 1.25rem;
+      color: var(--text-primary);
+    }
+    
+    .card {
+      background: var(--bg-card);
+      border-radius: 1rem;
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    
+    .channel-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    
+    .channel-card {
+      background: var(--bg-card);
+      padding: 1.25rem;
+      border-radius: 0.75rem;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .channel-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    
+    .channel-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+    
+    .channel-icon.email { background: #ef4444; }
+    .channel-icon.whatsapp { background: #22c55e; }
+    .channel-icon.telegram { background: #0ea5e9; }
+    
+    .channel-info h4 {
+      font-size: 1rem;
+      color: var(--text-primary);
+      margin-bottom: 0.25rem;
+    }
+    
+    .channel-info p {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+    
+    .message-list {
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    
+    .message-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    
+    .message-item:hover {
+      background: rgba(255, 255, 255, 0.02);
+    }
+    
+    .message-item:last-child {
+      border-bottom: none;
+    }
+    
+    .message-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+    
+    .message-content {
+      flex: 1;
+      min-width: 0;
+    }
+    
+    .message-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.25rem;
+    }
+    
+    .message-sender {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    
+    .message-time {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+    
+    .message-subject {
+      font-size: 0.875rem;
+      color: var(--text-primary);
+      margin-bottom: 0.25rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .message-preview {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .badge {
+      display: inline-block;
+      padding: 0.125rem 0.5rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      margin-left: 0.5rem;
+    }
+    
+    .badge.urgent {
+      background: rgba(239, 68, 68, 0.2);
+      color: var(--danger);
+    }
+    
+    .badge.channel {
+      background: rgba(59, 130, 246, 0.2);
+      color: var(--accent);
+    }
+    
+    .loading {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-secondary);
+    }
+    
+    .empty {
+      text-align: center;
+      padding: 3rem;
+      color: var(--text-secondary);
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+      
+      header {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      nav {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">CommsPulse</div>
+      <nav>
+        <a href="/ui/" class="active">Dashboard</a>
+        <a href="/ui/inbox.html">Inbox</a>
+        <a href="/ui/tasks.html">Tasks</a>
+        <a href="/ui/projects.html">Projects</a>
+      </nav>
+    </header>
+    
+    <div class="stats-grid" id="stats">
+      <div class="stat-card">
+        <h3>Total Messages</h3>
+        <div class="value" id="stat-messages">-</div>
+      </div>
+      <div class="stat-card">
+        <h3>Total Tasks</h3>
+        <div class="value" id="stat-tasks">-</div>
+      </div>
+      <div class="stat-card urgent">
+        <h3>Urgent Items</h3>
+        <div class="value" id="stat-urgent">-</div>
+      </div>
+      <div class="stat-card">
+        <h3>Portfolio Progress</h3>
+        <div class="value" id="stat-progress">-</div>
+        <div class="subtitle">Average across all projects</div>
+      </div>
+    </div>
+    
+    <div class="section">
+      <div class="section-header">
+        <h2>Channels</h2>
+      </div>
+      <div class="channel-list" id="channels">
+        <a href="/ui/inbox.html?channel=email" class="channel-card">
+          <div class="channel-icon email">&#9993;</div>
+          <div class="channel-info">
+            <h4>Email</h4>
+            <p id="channel-email">0 messages</p>
+          </div>
+        </a>
+        <a href="/ui/inbox.html?channel=whatsapp" class="channel-card">
+          <div class="channel-icon whatsapp">&#128172;</div>
+          <div class="channel-info">
+            <h4>WhatsApp</h4>
+            <p id="channel-whatsapp">0 messages</p>
+          </div>
+        </a>
+        <a href="/ui/inbox.html?channel=telegram" class="channel-card">
+          <div class="channel-icon telegram">&#9992;</div>
+          <div class="channel-info">
+            <h4>Telegram</h4>
+            <p id="channel-telegram">0 messages</p>
+          </div>
+        </a>
+      </div>
+    </div>
+    
+    <div class="section">
+      <div class="section-header">
+        <h2>Recent Messages</h2>
+        <a href="/ui/inbox.html" style="color: var(--accent); text-decoration: none;">View all &rarr;</a>
+      </div>
+      <div class="card">
+        <div class="message-list" id="messages">
+          <div class="loading">Loading messages...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    const API_BASE = window.location.origin;
+    
+    async function loadStats() {
+      try {
+        const res = await fetch(`${API_BASE}/api/stats`);
+        const stats = await res.json();
+        
+        document.getElementById('stat-messages').textContent = stats.total_messages || 0;
+        document.getElementById('stat-tasks').textContent = stats.total_tasks || 0;
+        document.getElementById('stat-urgent').textContent = (stats.urgent_messages || 0) + (stats.urgent_tasks || 0);
+        document.getElementById('stat-progress').textContent = (stats.portfolio_progress || 0) + '%';
+        
+        // Update channel counts
+        const byChannel = stats.by_channel || {};
+        document.getElementById('channel-email').textContent = `${byChannel.email || 0} messages`;
+        document.getElementById('channel-whatsapp').textContent = `${byChannel.whatsapp || 0} messages`;
+        document.getElementById('channel-telegram').textContent = `${byChannel.telegram || 0} messages`;
+      } catch (err) {
+        console.error('Failed to load stats:', err);
+      }
+    }
+    
+    async function loadMessages() {
+      try {
+        const res = await fetch(`${API_BASE}/api/messages?limit=5`);
+        const messages = await res.json();
+        
+        const container = document.getElementById('messages');
+        
+        if (messages.length === 0) {
+          container.innerHTML = '<div class="empty">No messages yet. Run <code>npm run simulate</code> to add test data.</div>';
+          return;
+        }
+        
+        container.innerHTML = messages.map(msg => `
+          <div class="message-item">
+            <div class="message-avatar">${(msg.sender || 'U')[0].toUpperCase()}</div>
+            <div class="message-content">
+              <div class="message-header">
+                <span class="message-sender">
+                  ${msg.sender || 'Unknown'}
+                  <span class="badge channel">${msg.channel}</span>
+                  ${msg.urgency === 'urgent' ? '<span class="badge urgent">Urgent</span>' : ''}
+                </span>
+                <span class="message-time">${formatTime(msg.received_at)}</span>
+              </div>
+              <div class="message-subject">${msg.subject || '(No subject)'}</div>
+              <div class="message-preview">${msg.body || ''}</div>
+            </div>
+          </div>
+        `).join('');
+      } catch (err) {
+        console.error('Failed to load messages:', err);
+        document.getElementById('messages').innerHTML = '<div class="empty">Failed to load messages</div>';
+      }
+    }
+    
+    function formatTime(isoString) {
+      if (!isoString) return '';
+      const date = new Date(isoString);
+      const now = new Date();
+      const diff = now - date;
+      
+      if (diff < 60000) return 'Just now';
+      if (diff < 3600000) return `${Math.floor(diff / 60000)}m ago`;
+      if (diff < 86400000) return `${Math.floor(diff / 3600000)}h ago`;
+      return date.toLocaleDateString();
+    }
+    
+    // Load data on page load
+    loadStats();
+    loadMessages();
+    
+    // Refresh every 30 seconds
+    setInterval(() => {
+      loadStats();
+      loadMessages();
+    }, 30000);
+  </script>
+</body>
+</html>
