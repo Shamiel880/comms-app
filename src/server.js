@@ -20,7 +20,7 @@ app.use((req, res, next) => {
 });
 
 // Serve the UI
-app.use('/ui', express.static(path.join(__dirname, '..', '..', 'ui')));
+app.use('/ui', express.static(path.join(__dirname, '..', 'ui')));
 
 // ── Health check ──────────────────────────────────────────
 app.get('/health', (req, res) => {
