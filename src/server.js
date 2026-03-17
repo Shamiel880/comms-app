@@ -346,7 +346,7 @@ function seedDemoData() {
 
 // ── Start server ──────────────────────────────────────────
 const PORT = process.env.PORT || 3001;
-app.listen(PORT, async () => {
+const server = app.listen(PORT, async () => {
   console.log(`\n[server] running on http://localhost:${PORT}`);
   console.log(`[server] mode: ${process.env.MODE || 'mock'}`);
 
@@ -373,5 +373,15 @@ app.listen(PORT, async () => {
     await startEmailIdle().catch(e => console.error('[email] IDLE failed:', e.message));
   } else {
     console.log('\n[server] MODE=mock — using seeded demo data\n');
+  }
+});
+
+// Handle port already in use error
+server.on('error', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    console.error(`[server] Port ${PORT} is already in use. Trying port ${PORT + 1}...`);
+    server.listen(PORT + 1);
+  } else {
+    console.error('[server] Server error:', err);
   }
 });
