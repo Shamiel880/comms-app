@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects - CommsPulse</title>
+  <style>
+    :root {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-card: #1e293b;
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --accent: #3b82f6;
+      --success: #22c55e;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --border: #334155;
+    }
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+    
+    .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+    
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .logo { font-size: 1.5rem; font-weight: 700; color: var(--accent); }
+    
+    nav { display: flex; gap: 1.5rem; }
+    
+    nav a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      transition: all 0.2s;
+    }
+    
+    nav a:hover, nav a.active {
+      color: var(--text-primary);
+      background: var(--bg-secondary);
+    }
+    
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    
+    .page-header h1 { font-size: 1.5rem; }
+    
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 1.5rem;
+    }
+    
+    .project-card {
+      background: var(--bg-card);
+      border-radius: 1rem;
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      transition: all 0.2s;
+    }
+    
+    .project-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+    
+    .project-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    
+    .project-status {
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    
+    .project-status.on-track { background: rgba(34, 197, 94, 0.2); color: var(--success); }
+    .project-status.at-risk { background: rgba(239, 68, 68, 0.2); color: var(--danger); }
+    .project-status.watch { background: rgba(245, 158, 11, 0.2); color: var(--warning); }
+    
+    .project-description {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      margin-bottom: 1.25rem;
+      line-height: 1.5;
+    }
+    
+    .progress-section { margin-bottom: 1.25rem; }
+    
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+      font-size: 0.875rem;
+    }
+    
+    .progress-label { color: var(--text-secondary); }
+    .progress-value { font-weight: 600; color: var(--text-primary); }
+    
+    .progress-bar {
+      height: 8px;
+      background: var(--bg-primary);
+      border-radius: 9999px;
+      overflow: hidden;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      border-radius: 9999px;
+      transition: width 0.3s ease;
+    }
+    
+    .progress-fill.on-track { background: var(--success); }
+    .progress-fill.at-risk { background: var(--danger); }
+    .progress-fill.watch { background: var(--warning); }
+    
+    .project-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+    
+    .stat {
+      text-align: center;
+    }
+    
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    
+    .stat-value.urgent { color: var(--danger); }
+    
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    
+    .empty {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--text-secondary);
+    }
+    
+    .empty code {
+      background: var(--bg-secondary);
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.25rem;
+      font-size: 0.875rem;
+    }
+    
+    @media (max-width: 768px) {
+      .container { padding: 1rem; }
+      header { flex-direction: column; gap: 1rem; }
+      nav { flex-wrap: wrap; justify-content: center; }
+      .projects-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">CommsPulse</div>
+      <nav>
+        <a href="/ui/">Dashboard</a>
+        <a href="/ui/inbox.html">Inbox</a>
+        <a href="/ui/tasks.html">Tasks</a>
+        <a href="/ui/projects.html" class="active">Projects</a>
+      </nav>
+    </header>
+    
+    <div class="page-header">
+      <h1>Projects</h1>
+    </div>
+    
+    <div class="projects-grid" id="projects">
+      <div class="empty">Loading projects...</div>
+    </div>
+  </div>
+  
+  <script>
+    const API_BASE = window.location.origin;
+    
+    async function loadProjects() {
+      try {
+        const res = await fetch(`${API_BASE}/api/projects`);
+        const projects = await res.json();
+        renderProjects(projects);
+      } catch (err) {
+        console.error('Failed to load projects:', err);
+        document.getElementById('projects').innerHTML = '<div class="empty">Failed to load projects</div>';
+      }
+    }
+    
+    function renderProjects(projects) {
+      const container = document.getElementById('projects');
+      
+      if (projects.length === 0) {
+        container.innerHTML = '<div class="empty">No projects found. Run <code>npm run simulate</code> to add test data.</div>';
+        return;
+      }
+      
+      container.innerHTML = projects.map(project => `
+        <div class="project-card">
+          <div class="project-header">
+            <h3 class="project-title">${project.name}</h3>
+            <span class="project-status ${project.status}">${formatStatus(project.status)}</span>
+          </div>
+          <p class="project-description">${project.description || 'No description available'}</p>
+          <div class="progress-section">
+            <div class="progress-header">
+              <span class="progress-label">Progress</span>
+              <span class="progress-value">${project.progress || 0}%</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill ${project.status}" style="width: ${project.progress || 0}%"></div>
+            </div>
+          </div>
+          <div class="project-stats">
+            <div class="stat">
+              <div class="stat-value">${project.open_tasks || 0}</div>
+              <div class="stat-label">Open Tasks</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value ${project.urgent_items > 0 ? 'urgent' : ''}">${project.urgent_items || 0}</div>
+              <div class="stat-label">Urgent Items</div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+    
+    function formatStatus(status) {
+      switch (status) {
+        case 'on-track': return 'On Track';
+        case 'at-risk': return 'At Risk';
+        case 'watch': return 'Watch';
+        default: return status || 'Unknown';
+      }
+    }
+    
+    loadProjects();
+    setInterval(loadProjects, 30000);
+  </script>
+</body>
+</html>
