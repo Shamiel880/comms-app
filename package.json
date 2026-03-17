@@ -1,0 +1,28 @@
+{
+  "name": "comms-system",
+  "version": "1.0.0",
+  "description": "AI communications ingestion and task system — test harness",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "test": "node src/test/run-tests.js",
+    "test:email": "node src/test/test-email.js",
+    "test:whatsapp": "node src/test/test-whatsapp.js",
+    "test:telegram": "node src/test/test-telegram.js",
+    "test:ai": "node src/test/test-ai.js",
+    "simulate": "node src/test/simulate-messages.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.1",
+    "express": "^4.18.2",
+    "imapflow": "^1.0.162",
+    "mailparser": "^3.6.6",
+    "node-fetch": "^2.7.0",
+    "nodemailer": "^8.0.2",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3"
+  }
+}
