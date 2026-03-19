@@ -24,14 +24,15 @@ async function normalise(raw) {
 
 function resolveUserId(sender, channel) {
   const map = {
-    'alice@example.com': 'user_alice',
-    'bob@example.com': 'user_bob',
-    '27821234567': 'user_alice',
-    '27829876543': 'user_bob',
-    '111111111': 'user_alice',
-    '222222222': 'user_bob',
+    'alice@example.com':              'user_alice',
+    'bob@example.com':                'user_bob',
+    'shamiel.simons@lemco.co.za':     'user_shamiel',
+    '27821234567':                    'user_alice',
+    '27829876543':                    'user_bob',
+    '111111111':                      'user_alice',
+    '222222222':                      'user_bob',
   };
-  return map[sender] || `unknown_${channel}_${sender.slice(-6)}`;
+  return map[sender] || sender;
 }
 
 module.exports = { normalise };

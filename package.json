@@ -11,6 +11,7 @@
     "api:dev": "nodemon src/server.js"
   },
   "dependencies": {
+    "@sendgrid/mail": "^8.1.6",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "dotenv": "^16.4.1",

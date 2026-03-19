@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+<OfficeApp
+  xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
   xsi:type="MailApp">
 
-  <Id>lemco-email-tagger-001</Id>
-  <Version>1.0.0</Version>
+  <Id>0bc2e4d5-b6ab-424c-b5c9-5563c35d6677</Id>
+  <Version>1.0.0.0</Version>
   <ProviderName>LEMCO</ProviderName>
-  <DefaultLocale>en-ZA</DefaultLocale>
+  <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="LEMCO Tagger"/>
   <Description DefaultValue="Tag emails for LEMCO Priority OS"/>
+  <IconUrl DefaultValue="https://outlook-addin-ruddy.vercel.app/icon.png"/>
+  <HighResolutionIconUrl DefaultValue="https://outlook-addin-ruddy.vercel.app/icon.png"/>
+  <SupportUrl DefaultValue="https://outlook-addin-ruddy.vercel.app"/>
+
+  <AppDomains>
+    <AppDomain>https://outlook-addin-ruddy.vercel.app</AppDomain>
+  </AppDomains>
 
   <Hosts>
     <Host Name="Mailbox"/>

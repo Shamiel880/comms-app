@@ -1,7 +1,7 @@
 require('dotenv').config();
 process.env.MODE = 'mock';
 const fetch = require('node-fetch');
-const BASE = `http://localhost:${process.env.PORT || 3000}`;
+const BASE = `http://localhost:${process.env.PORT || 3001}`;
 
 const scenarios = [
   {
